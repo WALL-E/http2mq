@@ -7,7 +7,7 @@ import (
 
 	"fmt"
 
-	"github.com/Openresty-App/http2mq/app"
+	"github.com/WALL-E/http2mq/app"
 )
 
 func main() {

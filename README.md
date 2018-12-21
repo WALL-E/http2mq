@@ -13,7 +13,7 @@ curl -H 'Authorization: Basic dXNlcjE6cHdkMQ==' -d '2' 'http://127.0.0.1:8080/ka
 
 # install
 ```
-go get -u github.com/Openresty-App/http2mq
+go get -u github.com/WALL-E/http2mq
 
 go run main.go
 
