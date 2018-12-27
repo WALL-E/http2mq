@@ -52,8 +52,8 @@ func CheckAuth(req *http.Request) bool {
 	return checkBaseauth(auth)
 }
 
-func CheckTopic(topic string) bool{
-	if _,ok:= Conf.TopicMap[topic];ok{
+func CheckTopic(topic string) bool {
+	if _, ok := Conf.TopicMap[topic]; ok {
 		return true
 	}
 

@@ -2,10 +2,8 @@ package main
 
 import (
 	"flag"
-
-	"os"
-
 	"fmt"
+	"os"
 
 	"github.com/WALL-E/http2mq/app"
 )
@@ -14,12 +12,12 @@ func main() {
 	conf := flag.String("conf", "http2mq.yaml", "http2mq configuration file")
 	flag.Parse()
 
-	a, err := app.NewApp(*conf)
+	application, err := app.NewApp(*conf)
 	if err != nil {
 		fmt.Printf("create app error %s", err.Error())
 		os.Exit(2)
 	}
-	defer a.Close()
+	defer application.Close()
 
-	a.Run()
+	application.Run()
 }
