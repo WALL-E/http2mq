@@ -2,18 +2,14 @@ package app
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
-
-	"github.com/Shopify/sarama"
-
 	"strings"
 
-	"fmt"
-
-	"time"
-
+	"github.com/Shopify/sarama"
 	"gopkg.in/yaml.v2"
+	"time"
 )
 
 var Conf *Http2MQ

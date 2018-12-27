@@ -53,6 +53,7 @@ func (k *Kafka) DoPost(res http.ResponseWriter, req *http.Request) {
 		Topic: k.Topic,
 		Value: sarama.ByteEncoder(b),
 	})
+
 	//
 	//Conf.AsyncProducer.Input() <- &sarama.ProducerMessage{
 	//	Topic: "http2mq",
