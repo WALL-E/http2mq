@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func baseauth(d string) []string {
+func basicAuth(d string) []string {
 	as := strings.SplitN(d, " ", 2)
 	if len(as) != 2 {
 		return nil
@@ -28,8 +28,8 @@ func baseauth(d string) []string {
 	return userPwd
 }
 
-func checkBaseauth(d string) bool {
-	userPwd := baseauth(d)
+func checkBasicAuth(d string) bool {
+	userPwd := basicAuth(d)
 	if userPwd == nil {
 		return false
 	}
@@ -49,7 +49,7 @@ func CheckAuth(req *http.Request) bool {
 		return false
 	}
 
-	return checkBaseauth(auth)
+	return checkBasicAuth(auth)
 }
 
 func CheckTopic(topic string) bool {
