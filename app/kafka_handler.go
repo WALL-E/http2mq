@@ -1,11 +1,10 @@
 package app
 
 import (
+	"io/ioutil"
 	"log"
 	"net/http"
 	"time"
-
-	"io/ioutil"
 
 	"github.com/Shopify/sarama"
 	"github.com/gorilla/mux"
