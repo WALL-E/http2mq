@@ -1,7 +1,12 @@
 # http2mq 
-send http body to kafka
 
-# example
+提供HTTP的文件上传服务，然后转发到Kafka。文件内容的格式采用行协议，每一行代表一条消息。
+
+# Features
+  
+文件支持gzip压缩
+
+# Example
 
 ```
 get latest message:
@@ -11,7 +16,8 @@ send message to http2mq
 curl -H 'Authorization: Basic dXNlcjE6cHdkMQ==' -d '2' 'http://127.0.0.1:8080/kafka/http2mq'
 ```
 
-# install
+# Install
+
 ```
 go get -u github.com/WALL-E/http2mq
 
@@ -19,7 +25,8 @@ go run main.go
 
 ```
 
-# configure
+# Configure
+
 ```
 web:
   port: 8080  #http listen port
