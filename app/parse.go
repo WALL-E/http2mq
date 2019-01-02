@@ -1,7 +1,6 @@
 package app
 
 import (
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -24,13 +23,9 @@ type KafkaConf struct {
 	Brokers      string `yaml:"brokers"`
 	Topic        string `yaml:"topic"`
 	ConsumerUser string `yaml:"consumer_user"`
-	ZK           string `yaml:"zk"`
-	ZkRoot       string `yaml:"zk_root"`
 
-	ZKServers     []string             `yaml:"-"`
 	SyncProducer  sarama.SyncProducer  `yaml:"-"`
 	AsyncProducer sarama.AsyncProducer `yaml:"-"`
-	Consumer      sarama.Consumer      `yaml:"-"`
 }
 
 type AuthUser struct {
@@ -64,17 +59,12 @@ func InitConf(file string) (*Http2MQ, error) {
 		return nil, err
 	}
 	c.KafkaConf.SyncProducer = syncProducer
+
 	asyncProducer, err := newAsyncProducer(brokers)
 	if err != nil {
 		return nil, err
 	}
 	c.KafkaConf.AsyncProducer = asyncProducer
-
-	consumer, err := newConsumer(brokers)
-	if err != nil {
-		return nil, err
-	}
-	c.KafkaConf.Consumer = consumer
 
 	Conf = c
 
@@ -122,17 +112,6 @@ func newAsyncProducer(brokers []string) (sarama.AsyncProducer, error) {
 	return producer, nil
 }
 
-func newConsumer(brokers []string) (sarama.Consumer, error) {
-	config := sarama.NewConfig()
-	config.Consumer.MaxWaitTime = 60 * time.Second
-	consumer, err := sarama.NewConsumer(brokers, config)
-	if err != nil {
-		return nil, err
-	}
-
-	return consumer, nil
-}
-
 func parse(d []byte) (*Http2MQ, error) {
 	c := &Http2MQ{}
 
@@ -155,12 +134,6 @@ func parse(d []byte) (*Http2MQ, error) {
 	c.TopicMap = make(map[string]bool, len(c.Topics))
 	for _, v := range c.Topics {
 		c.TopicMap[v] = true
-	}
-
-	c.ZKServers = strings.Split(c.ZK, ",")
-
-	if len(c.ZKServers) == 0 {
-		return nil, errors.New("需要zk地址")
 	}
 
 	return c, nil

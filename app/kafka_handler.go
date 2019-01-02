@@ -1,14 +1,11 @@
 package app
 
 import (
+	"github.com/Shopify/sarama"
+	"github.com/gorilla/mux"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"time"
-
-	"github.com/Shopify/sarama"
-	"github.com/gorilla/mux"
-	"github.com/wvanbergen/kafka/consumergroup"
 )
 
 type Kafka struct {
@@ -16,27 +13,7 @@ type Kafka struct {
 }
 
 func (k *Kafka) DoGet(res http.ResponseWriter, req *http.Request) {
-	conf := consumergroup.NewConfig()
-	conf.Zookeeper.Chroot = Conf.ZkRoot
-	conf.Offsets.Initial = sarama.OffsetNewest
-	conf.Offsets.ResetOffsets = true
-	conf.Offsets.ProcessingTimeout = 100 * time.Millisecond
-
-	consumer, err := consumergroup.JoinConsumerGroup(
-		Conf.ConsumerUser,
-		[]string{k.Topic},
-		Conf.ZKServers,
-		conf,
-	)
-	if err != nil {
-		res.WriteHeader(http.StatusInternalServerError)
-		res.Write([]byte(""))
-		return
-	}
-	defer consumer.Close()
-
-	msg := <-consumer.Messages()
-	res.Write(msg.Value)
+	res.Write([]byte("{\"messge\":\"ok\"}"))
 }
 
 func (k *Kafka) DoPost(res http.ResponseWriter, req *http.Request) {
